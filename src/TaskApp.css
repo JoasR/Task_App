@@ -1,0 +1,114 @@
+body{
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #f5efe8;
+}
+
+.task-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.room-list {
+  margin-bottom: 20px;
+}
+
+.room-list h2{
+  text-align: center;
+}
+
+.room-button-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.room-button {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-button-name{
+  font-size: 16px;
+}
+
+.room-button-star{
+  position: relative;
+  font-size: 20px;
+  padding-left: 10px;
+  top: -3px;
+  color: gold;
+}
+
+.room-button.Bathroom {
+  background-color: #e74c3c;
+}
+
+.room-button.Livingroom {
+  background-color: #e67e22;
+}
+
+.room-button.Bedroom {
+  background-color: #3498db;
+}
+
+.room-button.Kitchen {
+  background-color: #2ecc71;
+}
+
+.room-button.Garden {
+  background-color: #9b59b6;
+}
+
+.room-button.active {
+  opacity: 0.8;
+  border: 2px solid black;
+}
+
+.task-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-container {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+}
+
+.room-header {
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.sub-task {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.sub-task.completed {
+  text-decoration: line-through;
+}
