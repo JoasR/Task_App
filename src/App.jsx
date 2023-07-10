@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './TaskApp.css';
+import SubTask from "./components/SubTask"
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -21,24 +22,38 @@ const App = () => {
   const initializeTasks = () => {
     const subTasks = {
       Bathroom: [
-        { name: 'Vacuuming', completed: false },
-        { name: 'Cleaning', completed: false },
+        { name: 'Vacuuming', completed: false, color: "#c0392b" },
+        { name: 'Dust Whiping', completed: false, color: "#a93226" },
+        { name: 'Clean Toilet', completed: false, color: "#8e281f" },
+        { name: 'Fixing Laundry Machine', completed: false, color: "#731f19" },
+        { name: 'Clean The Mirror', completed: false, color: "#5c1713" },
       ],
       Livingroom: [
-        { name: 'Vacuuming', completed: false },
-        { name: 'Dusting', completed: false },
+        { name: 'Vacuuming', completed: false, color: "#d36b1f" },
+        { name: 'Dust Whiping', completed: false, color: "#bf591c"},
+        { name: 'Clean The Couch', completed: false, color: "#ab4619" },
+        { name: 'Clean The Windows', completed: false, color: "#972416" },
+        { name: 'Mopping', completed: false, color: "#831313" },
+        { name: 'Wipe The Tables', completed: false, color: "#6f1010" },
       ],
       Bedroom: [
-        { name: 'Vacuuming', completed: false },
-        { name: 'Changing Bed Sheets', completed: false },
+        { name: 'Vacuuming', completed: false, color: "#2e84c8" },
+        { name: 'Changing Bed Sheets', completed: false, color: "#2771b5" },
+        { name: 'Dust Whiping', completed: false, color: "#205e9f" },
+        { name: 'Clean The Mirror', completed: false, color: "#1a4b89" },
+        { name: 'Refill Diffuser', completed: false, color: "#143773" },
       ],
       Kitchen: [
-        { name: 'Cleaning Countertops', completed: false },
-        { name: 'Doing Dishes', completed: false },
+        { name: 'Cleaning Countertops', completed: false, color: "#82d997" },
+        { name: 'Doing Dishes', completed: false, color: "#77dd86" },
+        { name: 'Clean The Windows', completed: false, color: "#5dcf68" },
+        { name: 'Check The Fridge', completed: false, color: "#45c34c" },
+        { name: 'Check The Oven/Furnace', completed: false, color: "#2eb631" },
       ],
       Garden: [
-        { name: 'Watering Plants', completed: false },
-        { name: 'Brushing', completed: false },
+        { name: 'Watering Plants', completed: false, color: "#894ea9" },
+        { name: 'Brushing', completed: false, color: "#75459c" },
+        { name: 'Recycle', completed: false, color: "#623b8f" },
       ],
     };
 
@@ -56,12 +71,15 @@ const App = () => {
 
   const handleSubTaskToggle = (taskIndex, subTaskIndex) => {
     setTasks((prevTasks) => {
-      const updatedTasks = [...prevTasks];
-      const task = updatedTasks[taskIndex];
-      const subTask = task.subTasks[subTaskIndex];
-      subTask.completed = !subTask.completed;
-      return updatedTasks;
-    });
+    const updatedTasks = [...prevTasks];
+    const task = updatedTasks[taskIndex];
+    const subTasks = [...task.subTasks];
+    const updatedSubTask = { ...subTasks[subTaskIndex] };
+    updatedSubTask.completed = !updatedSubTask.completed;
+    subTasks[subTaskIndex] = updatedSubTask;
+    task.subTasks = subTasks;
+    return updatedTasks;
+  });
   };
 
   const getButtonClassName = (room) => {
@@ -81,11 +99,25 @@ const App = () => {
     return completedTasks.length === task.subTasks.length;
   };
 
+  const changeTitleShadow = () => {
+    switch(currentRoom){
+      case "Bathroom":
+        return '0px 0px 5px #e74c3c, 0px 0px 10px #e74c3c, 0px 0px 10px #e74c3c, 0px 0px 20px #e74c3c'
+      case "Livingroom":
+        return '0px 0px 5px #e67e22, 0px 0px 10px #e67e22, 0px 0px 10px #e67e22, 0px 0px 20px #e67e22'
+      case "Bedroom":
+        return '0px 0px 5px #3498db, 0px 0px 10px #3498db, 0px 0px 10px #3498db, 0px 0px 20px #3498db'
+      case "Kitchen":
+        return '0px 0px 5px #2ecc71, 0px 0px 10px #2ecc71, 0px 0px 10px #2ecc71, 0px 0px 20px #2ecc71'
+      case "Garden":
+        return '0px 0px 5px #9b59b6, 0px 0px 10px #9b59b6, 0px 0px 10px #9b59b6, 0px 0px 20px #9b59b6'
+    }
+  }
+
   return (
     <div className="task-app">
-      <h1>Task App</h1>
+      <h1 className='task-title' style={{textShadow: `${changeTitleShadow()}`}}>Task App</h1>
       <div className="room-list">
-        <h2>Select Room</h2>
         <div className="room-button-list">
           {tasks.map((task, index) => (
             <button
@@ -102,25 +134,24 @@ const App = () => {
       </div>
       {currentRoom && (
         <div className="task-list">
-          <h2>Tasks</h2>
           {tasks.map(
             (task, index) =>
               task.room === currentRoom && (
                 <div key={index} className="task-container">
-                  <h3>{task.room}</h3>
-                  <ul>
+                  <div>
                     {task.subTasks.map((subTask, subIndex) => (
-                      <li
-                        key={subIndex}
-                        className={`sub-task ${
-                          subTask.completed ? 'completed' : ''
-                        }`}
+                      <SubTask 
+                        key={subIndex} 
+                        className={`sub-task ${subTask.completed ? 'completed' : ''}`} 
                         onClick={() => handleSubTaskToggle(index, subIndex)}
-                      >
-                        {subTask.name}
-                      </li>
+                        name={subTask.name}
+                        color={subTask.color}
+                        currentRoom={currentRoom}
+                        number={subIndex + 1}
+                        completed={subTask.completed}
+                      />
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )
           )}
