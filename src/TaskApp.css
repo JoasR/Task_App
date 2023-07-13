@@ -189,3 +189,17 @@ body{
   color: #FF9529;
   font-size: 40px;
 }
+
+@media (max-width: 480px){
+    .content-container{
+      font-size: 9px;
+    }
+
+    .text{
+      font-size: 24px;
+    }
+
+    .completed-subtask-star{
+      font-size: 24px;
+    }
+}
